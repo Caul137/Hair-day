@@ -1,0 +1,108 @@
+
+:root{
+ --main-bg-color: #19181b;
+ --bg-color-agendar-aside: #232225;
+ --title-color: #ffffff;
+ --sub-title-text-color: #dadada;
+ --text-color: #bdbdbd;
+ --website-environment-color: #af9e3a;
+ --title-size: 24px;
+ --sub-title-text-size: 14px;
+ --text-size: 16px;
+ --spacing: .25rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  font-family: sans-serif;
+}
+
+
+.Title{
+    color: var(--title-color);
+    font-size: var(--title-size);
+}
+
+.SubTitle{
+    color: var(--sub-title-text-color);
+}
+
+.Text {
+    color: var(--text-color);
+}
+
+.Text-bold{
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+
+.Container{
+    display: grid;
+    grid-template-columns: .8fr 2fr;
+    text-align: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    align-items: center;
+
+}
+
+.Container-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    padding: calc(var(--spacing) * 20);
+    background-color: var(--bg-color-agendar-aside);
+    max-width: calc(var(--spacing)*124.5);
+    width: 100%;
+    border-radius: 10%;
+}
+
+.Container-left-content{
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.label-hour{
+    color: var(--text-color);
+    width: 100%;
+    padding: 10px 16px 10px 16px;
+    height: 100%;
+    background-color: var(--bg-color-agendar-aside);
+    border: solid;
+    border-color: rgba(231, 231, 231, 0.178);
+    border-radius: 10px;
+    cursor: pointer;
+
+} 
+ .label-hour:hover{
+    background-color: rgb(54, 54, 54);
+
+}
+
+.Agendamento{
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+
+.Horario {
+    max-width: 56%;
+    display: flex;
+    gap: 5px;
+    text-align: center;
+}
