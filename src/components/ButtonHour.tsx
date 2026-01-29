@@ -6,7 +6,7 @@ export const ButtonHour = ({children}: PropsWithChildren) => {
     return(
        <label className="label-hour">
         <span className="hour">{children}</span>
-        <input type="radio" name="time" value={children as string} />
+        <input type="radio" name="time" className="radio-button" value={children as string} />
        </label>
     );
 };

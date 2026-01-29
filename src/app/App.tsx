@@ -1,40 +1,41 @@
 import "../css/App.css";
-import TextBold from "../components/textBold";
-import { Title } from "../components/title";
-import { SubTitle } from "../components/subTitle";
-import { ButtonHour } from "../components/buttonHour";
+import TextBold from "../components/TextBold";
+import { Title } from "../components/Title";
+import { SubTitle } from "../components/SubTitle";
+import { ButtonHour } from "../components/ButtonHour";
 import Text from "../components/Text";
+import logoImg from "../assets/logo-hair-day.svg";
 
 export default function App() {
   return (
     <main className="Container">
       <div className="Container-left">
-        <img src="../assets/logo-hair-day.svg" />
+        <div className="image-card">
+          <img src={logoImg} />
+        </div>
         <div className="Container-left-content">
           {/* */}
-          <>
             <Title>Agende um Atendimento</Title>
             <SubTitle>
               Selecione data, horário e informe o nome do cliente para criar o
               agendamento
             </SubTitle>
-          </>
           {/* */}
-
-          <input type="date" />
 
           {/* */}
           <div className="Agendamento">
+            <Text>Data</Text>
+            <input type="date" className="Input-date" />
             <TextBold>Horários</TextBold>
+            <Text>Manhã</Text>
             <div className="Horario">
-              <Text>Manhã</Text>
               <ButtonHour>09:00</ButtonHour>
               <ButtonHour>10:00</ButtonHour>
               <ButtonHour>11:00</ButtonHour>
               <ButtonHour>12:00</ButtonHour>
             </div>
+            <Text>Tarde</Text>
             <div className="Horario">
-              <Text>Tarde</Text>
               <ButtonHour>13:00</ButtonHour>
               <ButtonHour>14:00</ButtonHour>
               <ButtonHour>15:00</ButtonHour>
@@ -42,8 +43,8 @@ export default function App() {
               <ButtonHour>17:00</ButtonHour>
               <ButtonHour>18:00</ButtonHour>
             </div>
+            <Text>Noite</Text>
             <div className="Horario">
-              <Text>Noite</Text>
               <ButtonHour>19:00</ButtonHour>
               <ButtonHour>20:00</ButtonHour>
               <ButtonHour>21:00</ButtonHour>
@@ -53,9 +54,12 @@ export default function App() {
 
           {/* */}
           <div className="Agendar">
-            <TextBold>Cliente</TextBold>
-            <input type="text" />
-            <button className="Button" type="submit">
+            <div>
+              <TextBold>Cliente</TextBold>
+              <input type="text" className="Input-agendar-nome" />
+            </div>
+
+            <button className="Button-agendar" type="submit">
               AGENDAR
             </button>
           </div>
