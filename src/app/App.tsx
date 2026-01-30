@@ -15,11 +15,11 @@ export default function App() {
         </div>
         <div className="Container-left-content">
           {/* */}
-            <Title>Agende um Atendimento</Title>
-            <SubTitle>
-              Selecione data, horário e informe o nome do cliente para criar o
-              agendamento
-            </SubTitle>
+          <Title>Agende um Atendimento</Title>
+          <SubTitle>
+            Selecione data, horário e informe o nome do cliente para criar o
+            agendamento
+          </SubTitle>
           {/* */}
 
           {/* */}
@@ -68,7 +68,41 @@ export default function App() {
       </div>
 
       <div className="Container-rigth">
-        <h1 className="Title"> Sua agenda </h1>
+        <div className="Header-sua-agenda">
+          <div>
+            <Title> Sua agenda </Title>
+            <SubTitle>
+              Consulte os seus cortes de cabelo agendados por dia{" "}
+            </SubTitle>
+          </div>
+          <div>
+            <input type="date"  className="Input-date" />
+          </div>
+        </div>
+
+        <div className="Dias-agendados">
+          <div className="Card-dias-agendados">
+            <div className="Border-para-o-card-dia-agendado">
+              <Text>Manhã</Text>
+              <Text>09-12</Text>
+            </div>
+            <Text>Nenhum agendamento para este período</Text>
+          </div>
+          <div className="Card-dias-agendados">
+            <div className="Border-para-o-card-dia-agendado">
+              <Text>Tarde</Text>
+              <Text>13-18</Text>
+            </div>
+            <Text>Nenhum agendamento para este período</Text>
+          </div>
+          <div className="Card-dias-agendados">
+            <div className="Border-para-o-card-dia-agendado">
+              <Text>Noite</Text>
+              <Text>19-21</Text>
+            </div>
+            <Text>Nenhum agendamento para este período</Text>
+          </div>
+        </div>
       </div>
     </main>
   );
