@@ -18,6 +18,7 @@ export const InputData = () => {
     <input
       type="date"
       ref={dateInputRef}
+      onChange={(e) => alert(e.target.value)}
       className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
     />
     <span className="text-[10px] text-[#8a8989]">🔽</span>
