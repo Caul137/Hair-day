@@ -14,26 +14,47 @@ export default function App() {
   const [selectedHourTime, setSelectedHourTime] = useState<string | null>(null);
   const [dataChange, setDataChange] = useState<boolean>(false);
   const [dataChangeS, setDataChangeS] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState("");
   const dateInputRef = useRef<HTMLInputElement>(null);
   const dateInputRefS = useRef<HTMLInputElement>(null);
+  const [time, setTime] = useState("");
+  const [id, setId] = useState(0);
+  const [label, setLabel] = useState("");
+  
+  const getLocalStorage = JSON.parse(localStorage.getItem("clientes") || "[]");
 
-  const [time, setTime] = useState("")
-  // const [date, setDate] = useState("")
-  const [id, setId] = useState(0)
-  const [label, setLabel] = useState("")
-
-
+  const checkSameHour = (hourTime: String) => {
+    return getLocalStorage.some((item: any) => item.data === selectedDate && item.horario === hourTime);
+  } 
+  
 
   const handleSelectHour = (time: string) => {
     setSelectedHourTime((prev) => (prev === time ? null : time));
   };
 
+  const saveLocalStorage = (e: FormEvent) => {
+    e.preventDefault();
 
+    if (!time) {
+      alert("Você precisa ter um nome e definir o horário do agendamento");
+      return;
+    }
 
- const saveLocalStorage = (e: FormEvent) => {
-  e.preventDefault()
-  alert([time, dateInputRef.current?.value, id, label])
- }
+    const newScheduling = [
+      ...getLocalStorage,
+      {
+        cliente: userName,
+        id: id,
+        horario: time,
+        data: selectedDate,
+        turno: label,
+      },
+    ];
+
+    localStorage.setItem("clientes", JSON.stringify(newScheduling));
+  };
+
+  
 
 
   return (
@@ -66,7 +87,11 @@ export default function App() {
               <input
                 type="date"
                 ref={dateInputRef}
-                onChange={(e) => {setDataChange(true)}}
+                value={selectedDate}
+                onChange={(e) => {
+                  setSelectedDate(e.target.value)
+                  setDataChange(true)
+                }}
                 className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
               />
               <span className="text-[10px] text-[#8a8989]">🔽</span>
@@ -79,7 +104,7 @@ export default function App() {
               {HorarioManha.map((hour) => (
                 <label
                   key={hour.id}
-                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300 cursor-pointer hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"}`}
+                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300  hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"} ${checkSameHour(hour.time) ? "opacity-20 cursor-not-allowed bg-red-900/20" : "cursor-pointer"}`}
                 >
                   <span>{hour.time}</span>
                   <input
@@ -87,10 +112,18 @@ export default function App() {
                     hidden={true}
                     name={hour.time}
                     value={hour.time}
-                    disabled={dataChange ? false : true}
+                    disabled={!dataChange || checkSameHour(hour.time)}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
-                  
+                    onChange={() => {
+                      (handleSelectHour(hour.time),
+                        dataChange
+                          ? [
+                              setTime(hour.time),
+                              setLabel(hour.label),
+                              setId(hour.id),
+                            ]
+                          : undefined);
+                    }}
                   />
                 </label>
               ))}
@@ -101,7 +134,7 @@ export default function App() {
               {HorarioTarde.map((hour) => (
                 <label
                   key={hour.id}
-                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300 cursor-pointer hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"}`}
+                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300 hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"} ${checkSameHour(hour.time) ? "opacity-20 cursor-not-allowed bg-red-900/20" : "cursor-pointer"}`}
                 >
                   <span>{hour.time}</span>
                   <input
@@ -109,9 +142,18 @@ export default function App() {
                     hidden={true}
                     name={hour.time}
                     value={hour.time}
-                    disabled={dataChange ? false : true}
+                    disabled={!dataChange || checkSameHour(hour.time)}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
+                    onChange={() => {
+                      (handleSelectHour(hour.time),
+                        dataChange
+                          ? [
+                              setTime(hour.time),
+                              setLabel(hour.label),
+                              setId(hour.id),
+                            ]
+                          : undefined);
+                    }}
                   />
                 </label>
               ))}
@@ -122,7 +164,7 @@ export default function App() {
               {HorarioNoite.map((hour) => (
                 <label
                   key={hour.id}
-                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300 cursor-pointer hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"}`}
+                  className={`flex items-center justify-center p-2 text-text-gray text-sm  rounded-xl  ${dataChange === true ? "bg-[#ffffff21] text-gray-300  hover:bg-[#ffffff3b]" : "bg-[#55555536] text-black"} ${dataChange && selectedHourTime && selectedHourTime === hour.time ? "border border-solid border-gray-400" : "border-none"} ${checkSameHour(hour.time) ? "opacity-20 cursor-not-allowed bg-red-900/20" : "cursor-pointer"}`}
                 >
                   <span>{hour.time}</span>
                   <input
@@ -130,9 +172,18 @@ export default function App() {
                     hidden={true}
                     name={hour.time}
                     value={hour.time}
-                    disabled={dataChange ? false : true}
+                    disabled={!dataChange || checkSameHour(hour.time)}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
+                    onChange={() => {
+                      (handleSelectHour(hour.time),
+                        dataChange
+                          ? [
+                              setTime(hour.time),
+                              setLabel(hour.label),
+                              setId(hour.id),
+                            ]
+                          : undefined);
+                    }}
                   />
                 </label>
               ))}
@@ -160,14 +211,7 @@ export default function App() {
         </form>
       </aside>
 
-
-
-
       {/* ---------------- */}
-
-
-
-
 
       {/* Container-rigth */}
       <section className="flex flex-col ml-16 mt-24 gap-7 w-full md:p-0 p-8 text-start">
