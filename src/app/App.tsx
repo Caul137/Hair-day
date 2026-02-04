@@ -13,20 +13,23 @@ export default function App() {
   const [userName, setUserName] = useState("");
   const [selectedHourTime, setSelectedHourTime] = useState<string | null>(null);
   const [dataChange, setDataChange] = useState<boolean>(false);
-  const [dataChangeS, setDataChangeS] = useState<boolean>(false);
+  const [dataChangeScheduled, setDataChangeScheduled] =
+    useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDateScheduled, setSelectedDateScheduled] = useState("");
   const dateInputRef = useRef<HTMLInputElement>(null);
-  const dateInputRefS = useRef<HTMLInputElement>(null);
+  const dateInputRefScheduled = useRef<HTMLInputElement>(null);
   const [time, setTime] = useState("");
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(Number);
   const [label, setLabel] = useState("");
-  
+
   const getLocalStorage = JSON.parse(localStorage.getItem("clientes") || "[]");
 
   const checkSameHour = (hourTime: String) => {
-    return getLocalStorage.some((item: any) => item.data === selectedDate && item.horario === hourTime);
-  } 
-  
+    return getLocalStorage.some(
+      (item: any) => item.data === selectedDate && item.horario === hourTime,
+    );
+  };
 
   const handleSelectHour = (time: string) => {
     setSelectedHourTime((prev) => (prev === time ? null : time));
@@ -53,9 +56,6 @@ export default function App() {
 
     localStorage.setItem("clientes", JSON.stringify(newScheduling));
   };
-
-  
-
 
   return (
     <main className="max-w-300 w-full mx-auto my-0 grid grid-cols-1 md:grid-cols-[450px_1fr] gap-15 p-4 md:p-0">
@@ -89,8 +89,8 @@ export default function App() {
                 ref={dateInputRef}
                 value={selectedDate}
                 onChange={(e) => {
-                  setSelectedDate(e.target.value)
-                  setDataChange(true)
+                  setSelectedDate(e.target.value);
+                  setDataChange(true);
                 }}
                 className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
               />
@@ -223,7 +223,7 @@ export default function App() {
             </SubTitle>
           </div>
           <div
-            onClick={() => dateInputRefS.current?.showPicker()}
+            onClick={() => dateInputRefScheduled.current?.showPicker()}
             className="flex items-center gap-3 border border-[#4d4d4e] rounded-2xl px-3 mb-5 focus-within:border-[#b89e49] transition-colors cursor-pointer"
           >
             <svg
@@ -234,8 +234,12 @@ export default function App() {
             </svg>
             <input
               type="date"
-              ref={dateInputRefS}
-              onChange={() => setDataChangeS(!dataChangeS)}
+              ref={dateInputRefScheduled}
+              value={selectedDateScheduled}
+              onChange={(e) => {
+                (setDataChangeScheduled(true),
+                  setSelectedDateScheduled(e.target.value));
+              }}
               className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
             />
             <span className="text-[10px] text-[#8a8989]">🔽</span>
