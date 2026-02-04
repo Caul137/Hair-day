@@ -4,7 +4,6 @@ import { Title } from "../components/Title";
 import { SubTitle } from "../components/SubTitle";
 import Text from "../components/Text";
 import TextBold from "../components/TextBold";
-import { InputData } from "../components/Input-data";
 import { HorarioManha } from "../components/HorarioManha";
 import { HorarioTarde } from "../components/HorarioTarde";
 import { HorarioNoite } from "../components/HorarioNoite";
@@ -19,7 +18,7 @@ export default function App() {
   const dateInputRefS = useRef<HTMLInputElement>(null);
 
   const [time, setTime] = useState("")
-  const [date, setDate] = useState("")
+  // const [date, setDate] = useState("")
   const [id, setId] = useState(0)
   const [label, setLabel] = useState("")
 
@@ -33,7 +32,7 @@ export default function App() {
 
  const saveLocalStorage = (e: FormEvent) => {
   e.preventDefault()
-  alert(dataChange)
+  alert([time, dateInputRef.current?.value, id, label])
  }
 
 
@@ -67,7 +66,7 @@ export default function App() {
               <input
                 type="date"
                 ref={dateInputRef}
-                onChange={() => setDataChange(!dataChange)}
+                onChange={(e) => {setDataChange(true)}}
                 className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
               />
               <span className="text-[10px] text-[#8a8989]">🔽</span>
@@ -90,7 +89,7 @@ export default function App() {
                     value={hour.time}
                     disabled={dataChange ? false : true}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => handleSelectHour(hour.time) }
+                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
                   
                   />
                 </label>
@@ -112,7 +111,7 @@ export default function App() {
                     value={hour.time}
                     disabled={dataChange ? false : true}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => handleSelectHour(hour.time)}
+                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
                   />
                 </label>
               ))}
@@ -133,7 +132,7 @@ export default function App() {
                     value={hour.time}
                     disabled={dataChange ? false : true}
                     checked={selectedHourTime === hour.time}
-                    onChange={() => handleSelectHour(hour.time)}
+                    onChange={() => {handleSelectHour(hour.time), dataChange ?  [setTime(hour.time), setLabel(hour.label), setId(hour.id)] : undefined}}
                   />
                 </label>
               ))}
@@ -160,6 +159,15 @@ export default function App() {
           </div>
         </form>
       </aside>
+
+
+
+
+      {/* ---------------- */}
+
+
+
+
 
       {/* Container-rigth */}
       <section className="flex flex-col ml-16 mt-24 gap-7 w-full md:p-0 p-8 text-start">
