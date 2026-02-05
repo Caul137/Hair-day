@@ -10,20 +10,55 @@ import { HorarioNoite } from "../components/HorarioNoite";
 import { useRef } from "react";
 
 export default function App() {
-  const [userName, setUserName] = useState("");
+  {
+    /* Usado para controlar o estado do checkbox do input radio, no aside do container left */
+  }
   const [selectedHourTime, setSelectedHourTime] = useState<string | null>(null);
+  {
+    /* Usado para controlar estados como disabled do input radio no aside do container left*/
+  }
+
   const [dataChange, setDataChange] = useState<boolean>(false);
-  const [dataChangeScheduled, setDataChangeScheduled] =
-    useState<boolean>(false);
+  {
+    /*  É o valor da data, selectedData valor da data do container left e selectedDateScheduled do container right */
+  }
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedDateScheduled, setSelectedDateScheduled] = useState("");
+  {
+    /* Usado apenas para referenciar o campo data com a div */
+  }
   const dateInputRef = useRef<HTMLInputElement>(null);
   const dateInputRefScheduled = useRef<HTMLInputElement>(null);
+  {
+    /*  Dados que vão para o localStorage */
+  }
+  const [userName, setUserName] = useState("");
   const [time, setTime] = useState("");
   const [id, setId] = useState(Number);
   const [label, setLabel] = useState("");
 
+  {
+    /*  Model de sucesso ao agendar uma atendimento  */
+  }
+  const [scheduleModel, setScheduleModel] = useState<boolean>(false);
+
+  {
+    /* ----------------------------------------------------------------- */
+  }
+
   const getLocalStorage = JSON.parse(localStorage.getItem("clientes") || "[]");
+
+  const renderManha = getLocalStorage.filter(
+    (label: any) => label.turno === "manha",
+  );
+
+  const renderTarde = getLocalStorage.filter(
+    (label: any) => label.turno === "tarde",
+  );
+
+  const renderNoite = getLocalStorage.filter(
+    (label: any) => label.turno === "noite",
+  );
 
   const checkSameHour = (hourTime: String) => {
     return getLocalStorage.some(
@@ -55,6 +90,10 @@ export default function App() {
     ];
 
     localStorage.setItem("clientes", JSON.stringify(newScheduling));
+    setScheduleModel(true);
+    setInterval(() => {
+      setScheduleModel(false);
+    }, 6000);
   };
 
   return (
@@ -201,6 +240,15 @@ export default function App() {
               />
             </div>
 
+            {scheduleModel ? (
+              <span className="bg-linear-to-l from bg-green-100 to-green-200  p-4 rounded-xl text-start text-sm">
+                {" "}
+                Seu agendamento foi realizado com sucesso!
+              </span>
+            ) : (
+              ""
+            )}
+
             <button
               className="w-full p-5 bg-[#f0c94c9c] rounded-2 text-[#19181b] font-bold cursor-pointer transition-opacity hover:opacity-90 disabled:opacity-50"
               disabled={!userName}
@@ -237,8 +285,7 @@ export default function App() {
               ref={dateInputRefScheduled}
               value={selectedDateScheduled}
               onChange={(e) => {
-                (setDataChangeScheduled(true),
-                  setSelectedDateScheduled(e.target.value));
+                setSelectedDateScheduled(e.target.value);
               }}
               className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
             />
@@ -254,7 +301,13 @@ export default function App() {
               <Text>09-12h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
-              Nenhum agendamento para este período
+              {renderManha.length > 0
+                ? renderManha.map((item: any) => (
+                    <div>
+                      {selectedDateScheduled === item.data ? item.cliente : ""}
+                    </div>
+                  ))
+                : ""}
             </p>
           </div>
 
@@ -265,7 +318,16 @@ export default function App() {
               <Text>13-18h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
-              Nenhum agendamento para este período
+              {renderTarde.length > 0
+                ? renderTarde.map((item: any) => (
+                    <div>
+                      {" "}
+                      {selectedDateScheduled === item.data
+                        ? item.cliente
+                        : ""}{" "}
+                    </div>
+                  ))
+                : ""}
             </p>
           </div>
 
@@ -276,7 +338,16 @@ export default function App() {
               <Text>19-21h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
-              Nenhum agendamento para este período
+              {renderNoite.length > 0
+                ? renderManha.map((item: any) => (
+                    <div>
+                      {" "}
+                      {selectedDateScheduled === item.data
+                        ? item.cliente
+                        : ""}{" "}
+                    </div>
+                  ))
+                : ""}
             </p>
           </div>
         </div>
