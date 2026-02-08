@@ -90,11 +90,24 @@ export default function App() {
     ];
 
     localStorage.setItem("clientes", JSON.stringify(newScheduling));
+
+    setUserName("");
+    setSelectedHourTime(null);
+    setLabel("");
+    setTime("");
+    setId(Number);
+    setSelectedDate("");
+    setDataChange(false);
+
+
     setScheduleModel(true);
     setInterval(() => {
       setScheduleModel(false);
     }, 6000);
   };
+
+{/* Usar selectdate(false) para quando limpar o input*/}
+
 
   return (
     <main className="max-w-300 w-full mx-auto my-0 grid grid-cols-1 md:grid-cols-[450px_1fr] gap-15 p-4 md:p-0">
@@ -131,9 +144,15 @@ export default function App() {
                   setSelectedDate(e.target.value);
                   setDataChange(true);
                 }}
-                className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
+                className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden appearance-none"
               />
-              <span className="text-[10px] text-[#8a8989]">🔽</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4 fill-gray-400"
+                viewBox="0 0 640 640"
+              >
+                <path d="M297.4 438.6C309.9 451.1 330.2 451.1 342.7 438.6L502.7 278.6C515.2 266.1 515.2 245.8 502.7 233.3C490.2 220.8 469.9 220.8 457.4 233.3L320 370.7L182.6 233.4C170.1 220.9 149.8 220.9 137.3 233.4C124.8 245.9 124.8 266.2 137.3 278.7L297.3 438.7z" />
+              </svg>
             </div>
 
             <TextBold>Horários</TextBold>
@@ -232,12 +251,25 @@ export default function App() {
           <div className="flex flex-col gap-8 mt-4">
             <div>
               <TextBold>Cliente</TextBold>
-              <input
-                type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                className="w-full p-3 bg-transparent border border-[#4d4d4e] rounded-2xl text-white mt-2 mb-5 outline-none focus:border-[#b89e49]"
-              />
+              <div className="flex items-center text-center gap-1 p-3 border border-[#4d4d4e] rounded-2xl px-3 mt-2 mb-5 focus-within:border-[#b89e49] transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-person-square w-4 h-4 fill-amber-400/80 shrink-0"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                </svg>
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="w-full bg-transparent text-white outline-none focus:border-[#b89e49]"
+                />
+              </div>
             </div>
 
             {scheduleModel ? (
@@ -287,9 +319,15 @@ export default function App() {
               onChange={(e) => {
                 setSelectedDateScheduled(e.target.value);
               }}
-              className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer"
+              className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden appearance-none" 
             />
-            <span className="text-[10px] text-[#8a8989]">🔽</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 fill-gray-400"
+              viewBox="0 0 640 640"
+            >
+              <path d="M297.4 438.6C309.9 451.1 330.2 451.1 342.7 438.6L502.7 278.6C515.2 266.1 515.2 245.8 502.7 233.3C490.2 220.8 469.9 220.8 457.4 233.3L320 370.7L182.6 233.4C170.1 220.9 149.8 220.9 137.3 233.4C124.8 245.9 124.8 266.2 137.3 278.7L297.3 438.7z" />
+            </svg>
           </div>
         </header>
 
@@ -297,13 +335,26 @@ export default function App() {
           {/* Período Manhã */}
           <div className="w-full rounded-2 border border-white/10 pb-3">
             <div className="flex justify-between p-2 px-3 border-b border-white/10 mb-3">
-              <Text>Manhã</Text>
+              <div className="flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-brightness-alt-high w-5 h-6 fill-amber-400/80"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3m8 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5m-13.5.5a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm11.157-6.157a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.9 2.121a.5.5 0 0 0 .707-.707L3.05 5.343a.5.5 0 1 0-.707.707zM8 7a4 4 0 0 0-4 4 .5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5 4 4 0 0 0-4-4m0 1a3 3 0 0 1 2.959 2.5H5.04A3 3 0 0 1 8 8" />
+                </svg>
+                <Text>Manhã</Text>
+              </div>
+
               <Text>09-12h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
               {renderManha.length > 0
                 ? renderManha.map((item: any) => (
-                    <div>
+                    <div key={item.time}>
                       {selectedDateScheduled === item.data ? item.cliente : ""}
                     </div>
                   ))
@@ -314,13 +365,27 @@ export default function App() {
           {/* Período Tarde */}
           <div className="w-full rounded-2 border border-white/10 pb-3">
             <div className="flex justify-between p-2 px-3.75 border-b border-white/10 mb-3">
-              <Text>Tarde</Text>
+              <div className="flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-cloud-sun w-4 h-4 fill-amber-400/80"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M7 8a3.5 3.5 0 0 1 3.5 3.555.5.5 0 0 0 .624.492A1.503 1.503 0 0 1 13 13.5a1.5 1.5 0 0 1-1.5 1.5H3a2 2 0 1 1 .1-3.998.5.5 0 0 0 .51-.375A3.5 3.5 0 0 1 7 8m4.473 3a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 16h8.5a2.5 2.5 0 0 0 0-5z" />
+                  <path d="M10.5 1.5a.5.5 0 0 0-1 0v1a.5.5 0 0 0 1 0zm3.743 1.964a.5.5 0 1 0-.707-.707l-.708.707a.5.5 0 0 0 .708.708zm-7.779-.707a.5.5 0 0 0-.707.707l.707.708a.5.5 0 1 0 .708-.708zm1.734 3.374a2 2 0 1 1 3.296 2.198q.3.423.516.898a3 3 0 1 0-4.84-3.225q.529.017 1.028.129m4.484 4.074c.6.215 1.125.59 1.522 1.072a.5.5 0 0 0 .039-.742l-.707-.707a.5.5 0 0 0-.854.377M14.5 6.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
+                </svg>
+                <Text>Tarde</Text>
+              </div>
+
               <Text>13-18h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
               {renderTarde.length > 0
                 ? renderTarde.map((item: any) => (
-                    <div>
+                    <div key={item.time}>
                       {" "}
                       {selectedDateScheduled === item.data
                         ? item.cliente
@@ -334,13 +399,27 @@ export default function App() {
           {/* Período Noite */}
           <div className="w-full rounded-2 border border-white/10 pb-3">
             <div className="flex justify-between p-2 px-3 border-b border-white/10 mb-3">
-              <Text>Noite</Text>
+              <div className="flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-moon-stars w-4 h-4 fill-amber-400/80"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
+                  <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                </svg>
+                <Text>Noite</Text>
+              </div>
+
               <Text>19-21h</Text>
             </div>
             <p className="px-3 text-zinc-400 text-sm">
               {renderNoite.length > 0
-                ? renderManha.map((item: any) => (
-                    <div>
+                ? renderNoite.map((item: any) => (
+                    <div key={item.time}>
                       {" "}
                       {selectedDateScheduled === item.data
                         ? item.cliente
