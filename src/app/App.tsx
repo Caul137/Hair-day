@@ -10,6 +10,9 @@ import { HorarioNoite } from "../components/HorarioNoite";
 import { useRef } from "react";
 
 export default function App() {
+
+  const getTodayDate  = new Date().toLocaleDateString('en-CA');
+
   {
     /* Usado para controlar o estado do checkbox do input radio, no aside do container left */
   }
@@ -23,7 +26,7 @@ export default function App() {
     /*  É o valor da data, selectedData valor da data do container left e selectedDateScheduled do container right */
   }
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedDateScheduled, setSelectedDateScheduled] = useState("");
+  const [selectedDateScheduled, setSelectedDateScheduled] = useState(getTodayDate);
   {
     /* Usado apenas para referenciar o campo data com a div */
   }
@@ -115,10 +118,7 @@ export default function App() {
       setScheduleModel(false);
     }, 6000);
 
-    setSelectedDateScheduled(selectedDate)
-
   };
-
 
   const  deleteSchedule = (id: number) => {
     const deleteLocalStorage = schedule.filter((item: any) => item.id !== id );
@@ -127,10 +127,9 @@ export default function App() {
     
   }
 
-  {
-    /* Usar selectdate(false) para quando limpar o input*/
-  }
 
+
+  
   return (
     <main className="max-w-300 w-full mx-auto my-0 grid grid-cols-1 md:grid-cols-[450px_1fr] gap-15 p-4 md:p-0">
       {/* Container-left */}
@@ -166,6 +165,7 @@ export default function App() {
                   setSelectedDate(e.target.value);
                   setDataChange(true);
                 }}
+                min={getTodayDate}
                 className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden appearance-none"
               />
               <svg
@@ -351,8 +351,9 @@ export default function App() {
               ref={dateInputRefScheduled}
               value={selectedDateScheduled}
               onChange={(e) => {
-                setSelectedDateScheduled(e.target.value);
+                setSelectedDateScheduled(e.target.value || getTodayDate) ;
               }}
+              min={getTodayDate}
               className="flex-1 bg-transparent py-3 text-white outline-none cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden appearance-none"
             />
             <svg
@@ -389,7 +390,7 @@ export default function App() {
               {renderManha.length > 0
                 ? renderManha.map((item: any) => (
                     <div key={item.id}>
-                      {selectedDateScheduled === item.data  ? (
+                      {selectedDateScheduled === item.data ? (
                         <div className="flex gap-3 justify-between">
                           <div className="flex gap-3">
                             <span className="font-bold bg-gray-900">
@@ -414,7 +415,7 @@ export default function App() {
                       )}
                     </div>
                   ))
-                : "Nenhum agendamento marcado neste período"}
+                : ""}
             </p>
           </div>
 
@@ -468,7 +469,7 @@ export default function App() {
                       )}{" "}
                     </div>
                   ))
-                : "Nenhum agendamento marcado neste período"}
+                : ""}
             </p>
           </div>
 
@@ -497,7 +498,7 @@ export default function App() {
                 ? renderNoite.map((item: any) => (
                     <div key={item.id}>
                       {" "}
-                      {selectedDateScheduled === item.data && renderNoite.length >= 0 ? (
+                      {selectedDateScheduled === item.data ? (
                         <div className="flex gap-3 justify-between">
                           <div className="flex gap-3">
                             <span className="font-bold bg-gray-900">
@@ -522,7 +523,7 @@ export default function App() {
                       )}{" "}
                     </div>
                   ))
-                : "Nenhum agendamento marcado neste período"}
+                : ""}
             </p>
           </div>
         </div>
